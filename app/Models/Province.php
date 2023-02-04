@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class City extends Model
+class Province extends Model
 {
     public $timestamps = false;
-    protected $fillable = ['name_thanhpho','type'];
-    protected $primaryKey = 'matp';
-    protected $table = 'tbl_tinhthanhpho';
+    protected $fillable = ['province_name','type'];
+    protected $primaryKey = 'province_id';
+    protected $table = 'tbl_province';
 }

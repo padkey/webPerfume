@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Province extends Model
+class District extends Model
 {
     //use HasFactory;
     public $timestamps = false;
-    protected $fillable = ['name_quanhuyen','type','matp'];
-    protected $primaryKey = 'maqh';
-    protected $table = 'tbl_quanhuyen';
+    protected $fillable = ['district_name','type','province_id'];
+    protected $primaryKey = 'district_id';
+    protected $table = 'tbl_district';
 }

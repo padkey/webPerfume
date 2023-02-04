@@ -13,7 +13,10 @@ use App\Models\Login;
 use Socialite; // trang xã hội
 use App\Rules\Captcha; // captcha
 use Validator;
+use Auth; // kiểm tra đăng nhập admin
 session_start();
+
+// KHÔNG SỬ Dụng CONTROLLER này nữa, sử dụng controller Auth
 class AdminController extends Controller
 {
     //google
@@ -85,7 +88,7 @@ class AdminController extends Controller
     }
     public function callbackFacebook(){
         $provider = Socialite::driver('facebook')->user();
-        $account = Social::where('provider','facebook')->where('provider_user_id',$provider->getId())->firt();
+        $account = Social::where('provider','facebook')->where('provider_user_id',$provider->getId())->first();
         if($account){
             //login vào trang dashboard
             $account_name = Login::where('admin_id',$account->user)->first();
@@ -97,7 +100,7 @@ class AdminController extends Controller
                         'provider_user_id'=> $provider->getId(),
                         'provider'=>'facebook'
                     ]);
-        }           $orang = Login::where('admin_email',$provider->getEmail())->first();
+                  $orang = Login::where('admin_email',$provider->getEmail())->first();
                 if(!$orang){
                     $orang = Login::create([
                         'admin_name' => $provider->getName(),
@@ -113,9 +116,10 @@ class AdminController extends Controller
                  Session::put('adminId',$account_name->admin_id);
                 return Redirect::to('/dashboard')->with('message','Đăng nhập Admiin thành công');
     }
+    }
     //kiểm tra login
     public function authLogin(){
-        $adminId = Session::get('adminId');
+        $adminId = Auth::id(); // auth khi đăng nhập thì Auth đã lưu thông tin cho mình rồi
        // $loginNormal = Session::get('loginNormal');
             if($adminId){
                 return Redirect::to('dashboard');
@@ -169,4 +173,6 @@ class AdminController extends Controller
         Session::put('adminId',null);
         return Redirect::to('/admin');
     }
+
+
 }

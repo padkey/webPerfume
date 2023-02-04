@@ -172,11 +172,18 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
+        App\Providers\BladeServiceProvider::class,  // kiểm tra auth và kiểm tra impersonate( mạo danh) , ở bên provider đã đặt tên rồi nên không cần đặt tên alias nũa
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+
+
+        Srmklive\PayPal\Providers\PayPalServiceProvider::class // Paypal
+
     ],
 
     /*
@@ -189,7 +196,7 @@ return [
     | the aliases are "lazy" loaded so they don't hinder performance.
     |
     */
-
+//aliases : bí danh
     'aliases' => [
 
         'App' => Illuminate\Support\Facades\App::class,
@@ -232,6 +239,7 @@ return [
         'Socialite'=> Laravel\Socialite\Facdes\Socialite::class, //cho alias(bí danh)
         'PDF' =>Barryvdh\DomPDF\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

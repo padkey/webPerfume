@@ -5,7 +5,7 @@
         <h2 class="title text-center">{{$brand->brand_name}}</h2>
         @endforeach
         @foreach($productsByBrand as $key => $product)
-            <a href="{{URL::to('/productDetail/'.$product->product_id)}}">
+            <a href="{{URL::to('/productDetail/'.$product->product_slug)}}">
                 <div class="col-sm-4">
                     <div class="product-image-wrapper">
                         <div class="single-products">

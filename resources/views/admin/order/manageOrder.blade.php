@@ -43,12 +43,16 @@
                             <td>{{$i++;}}</td>
                             <td>{{ $order->order_code }}</td>
                             <td>{{$order->created_at}}</td>
-                            <td>@if ($order->order_status == 1)
-                                    New order
-                                @else
-                                 Done processing
+                         {{--   <td>@if ($order->order_status == 1)
+                                     <span class="text-info">New order</span>
+                                @elseif ($order->order_status == 2)
+                               <span class="text-success">  Done processing </span>
+                                @elseif ($order->order_status == 3)
+                                    <div class="text-danger">Cancelled</div>
+                                    <span>Reason : {{$order->order_destroy}}</span>
                                     @endif
-                            </td>
+                            </td>--}}
+                            <td>{{$order->orderStatus->order_status_name}}</td>
 
                             <td>
                                 <a href="{{URL::to('/viewOrder/'.$order->order_code)}}" class="active styling-edit" ui-toggle-class="">

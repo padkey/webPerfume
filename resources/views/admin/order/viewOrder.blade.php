@@ -86,12 +86,13 @@
                         <td>{{$shipping->shipping_email}}</td>
                         <td>{{$shipping->shipping_notes}}</td>
                         <td>
-                            @if($shipping->shipping_method ==0 )
+                           {{-- @if($shipping->shipping_method ==0 )
                                 tranfer bank
                             @elseif($shipping->shipping_method ==1)
                                 hand cash
                                 @elseif($shipping->shipping_method ==2)
-                            @endif
+                            @endif--}}
+                            {{$shipping->shipping_method_code}}
                         </td>
                         <td>
                             <a href="{{URL::to('/viewOrder/')}}" class="active styling-edit" ui-toggle-class="">
@@ -115,27 +116,6 @@
             <div class="panel-heading">
                 Show All Order Detail
             </div>
-            <div class="row w3-res-tb">
-                <div class="col-sm-5 m-b-xs">
-                    <select class="input-sm form-control w-sm inline v-middle">
-                        <option value="0">Bulk action</option>
-                        <option value="1">Delete selected</option>
-                        <option value="2">Bulk edit</option>
-                        <option value="3">Export</option>
-                    </select>
-                    <button class="btn btn-sm btn-default">Apply</button>
-                </div>
-                <div class="col-sm-4">
-                </div>
-                <div class="col-sm-3">
-                    <div class="input-group">
-                        <input type="text" class="input-sm form-control" placeholder="Search">
-                        <span class="input-group-btn">
-            <button class="btn btn-sm btn-default" type="button">Go!</button>
-          </span>
-                    </div>
-                </div>
-            </div>
             <div class="table-responsive">
                 <?php
                 $message = Session::get('message');
@@ -148,8 +128,7 @@
                 <table class="table table-striped b-t b-light">
                     <thead>
                     <tr>
-
-                        <th></th>
+                        <th ></th>
                         <th>Product name</th>
                         <th>Inventory quantity</th>
                         <th>Coupon code</th>
@@ -217,9 +196,11 @@
                                         }
                                 @endphp
 
+                            <input type="hidden" class="totalDiscount" value="{{$totalCoupon}}" >
+
                             <p>Total discount : {{number_format($totalCoupon,0,',','.')}}đ</p>
                             <p>Feeship : {{number_format($detail->product_feeship,0,',','.')}}đ</p>
-                            <p>Total payment : {{number_format($total - $totalCoupon -  $detail->product_feeship,0,',','.')}}đ</p>
+                            <p>Total payment : {{number_format($total - $totalCoupon +  $detail->product_feeship,0,',','.')}}đ</p>
                         </td>
 
                     </tr>
@@ -228,12 +209,21 @@
                             <form >
                                 @csrf
                                 @foreach($order as $key => $ord)
-                                <select name="" id="" class="form-control orderDetails">
-                                    <option value="">----Choose----</option>
-                                    <option id="{{$ord->order_id}}" value="1" {{$ord->order_status==1 ? 'selected' : '' }}>No process</option>
-                                    <option id="{{$ord->order_id}}" value="2" {{$ord->order_status==2 ? 'selected' : '' }}>Delivered</option>
-                                    <option id="{{$ord->order_id}}" value="3" {{$ord->order_status==3 ? 'selected' : '' }}>Custody(tạm giữ)</option>
-                                </select>
+                                    @if($ord->order_status == 1)
+                                        Người dùng chưa Thanh toán hóa đơn!
+                                    @elseif($ord->order_status == 4)
+                                        Khách hàng đã nhận được đơn hàng này
+                                    @else
+                                        {{--1 có nghĩa là đơn hàng chưa chọn hình thức thanh toán--}}
+                                        {{--2 có nghĩa là đơn hàng đang chờ admin xác nhận--}}
+                                        {{--3 có nghĩa là đơn hàng đã được admin xác nhận mà đang chờ vận chuyển--}}
+                                        <select name="" id="" class="form-control orderDetails">
+                                            <option value="">----Choose----</option>
+                                            <option id="{{$ord->order_id}}" value="2" {{$ord->order_status==2 ? 'selected' : '' }}>Wait for confirm</option>
+                                            <option id="{{$ord->order_id}}" value="3" {{$ord->order_status==3 ? 'selected' : '' }}>Confirm</option>
+                                            {{--<option id="{{$ord->order_id}}" value="3" {{$ord->order_status==3 ? 'selected' : '' }}>Custody(tạm giữ)</option>--}}
+                                        </select>
+                                    @endif
                                 @endforeach
                             </form>
 

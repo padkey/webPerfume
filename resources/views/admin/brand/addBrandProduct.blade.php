@@ -6,24 +6,27 @@
                 <header class="panel-heading">
                     Create Brand
                 </header>
-                <?php
-                $message = Session::get('message');
-                if($message){
-                    echo '<span class="text-alert">',$message,'</span>';
-                    Session::put('message',null);
-                }
-                ?>
+
+
+                @php
+                    $message = Session::get('message');
+                    if($message){
+                        echo '<span class="text-alert">',$message,'</span>';
+                        Session::put('message',null);
+                    }
+                    @endphp
                 <div class="panel-body">
                     <div class="position-center">
+
                         <form role="form" method="POST" action="{{URL::to('/saveBrandProduct')}}">
                             @csrf
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Brand name</label>
-                                <input type="text" class="form-control"name="brandName" id="exampleInputEmail1" >
+                                <input type="text" class="form-control"name="brandName" id="slug" onkeyup="ChangeToSlug()" >
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Brand Slug</label>
-                                <input type="text" class="form-control"name="brandSlug" id="exampleInputEmail1" >
+                                <input type="text" class="form-control"name="brandSlug" id="convert_slug" >
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Keywords</label>

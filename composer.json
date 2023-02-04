@@ -11,11 +11,18 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "google/recaptcha": "~1.1",
-        "guzzlehttp/guzzle": "^7.0.1",
+        "guzzlehttp/guzzle": "^7.3",
         "laravel/framework": "^8.40",
+        "laravel/helpers": "^1.4",
         "laravel/socialite": "^5.2",
         "laravel/tinker": "^2.5",
-        "maatwebsite/excel": "^3.1"
+        "maatwebsite/excel": "^3.1",
+        "nwidart/laravel-modules": "^8.2",
+        "phpviet/laravel-omnipay": "^1.1",
+        "phpviet/omnipay-momo": "^1.0",
+        "ramsey/uuid": "^4.2",
+        "srmklive/paypal": "^3.0",
+        "unisharp/laravel-filemanager": "^2.2"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

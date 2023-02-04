@@ -44,16 +44,36 @@
                             </label>
                         </th>
                         <th>Category name</th>
+                        <th>Belong To</th>
                         <th>Slug</th>
                         <th>Status</th>
                         <th style="width:30px;"></th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <style>
+                        #categoryOrder .ui-state-highlight{  /*style cho cái ô bị di chuyển*/
+                            padding: 24px;
+                            background-color: #ffc2bc;
+                            cursor:move;  /*khi nhấp kéo thì con trỏ chuột được style lại*/
+                            margin-top: 12px;
+                        }
+                    </style>
+                    <tbody id="categoryOrder"> {{--sắp xếp--}}
                     @foreach($allCategoryProduct as $key => $category)
-                    <tr>
+                    <tr id="{{$category->category_id}}">
                         <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
                         <td>{{ $category->category_name }}</td>
+                        <td>
+                            @if($category->category_parent == 0)
+                               <span style="color: #9c3328">-- Parent --</span>
+                            @else
+                                @foreach($allCategoryProduct as $key2 => $categoryParent)
+                                    @if($category->category_parent == $categoryParent->category_id)
+                                            <span style="color: green">{{$categoryParent->category_name}}</span>
+                                    @endif
+                                @endforeach
+                            @endif
+                        </td>
                         <td>{{ $category->category_slug }}</td>
                         <td>
                             <span class="text-ellipsis">

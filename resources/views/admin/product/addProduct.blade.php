@@ -16,19 +16,27 @@
                 <div class="panel-body">
                     <div class="position-center">
                         <form role="form" method="POST" action="{{URL::to('/saveProduct')}}" enctype="multipart/form-data">
+                            @csrf
                             <div class="form-group">
-                                {{ csrf_field() }}
                                 <label for="exampleInputEmail1">Product name</label>
-                                <input type="text" class="form-control"name="productName" id="exampleInputEmail1" placeholder="Enter product">
+                                <input type="text" class="form-control"name="productName" id="slug" onkeyup="ChangeToSlug()">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Slug</label>
+                                <input type="text" class="form-control"name="productSlug" id="convert_slug" >
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Quantity</label>
-                                <input type="text" class="form-control"name="productQty"
+                                <input type="text" class="form-control " name="productQty">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1"> Cost price(giá vốn) </label>
+                                <input type="text" class="form-control money" name="productCost"
                                        data-validation="length" data-validation-length="min3">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Product price</label>
-                                <input type="text" class="form-control"name="productPrice"
+                                <label for="exampleInputEmail1">Sale price(giá bán)</label>
+                                <input type="text" class="form-control money"name="productPrice"
                                        data-validation="length" data-validation-length="min3">
                             </div>
                             <div class="form-group">
@@ -41,7 +49,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Description product</label>
-                                <textarea style="resize:none;" rows="5" type="text" class="form-control" id="ckeditor2" name="productDes" placeholder="Description product"> </textarea>
+                                <textarea style="resize:none;" rows="5" type="text" class="form-control" id="myEditor" name="productDes" placeholder="Description product"> </textarea>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Keywords</label>
@@ -62,6 +70,10 @@
                                     <option value="{{$brand->brand_id}}">{{ $brand->brand_name }} </option>
                                         @endforeach
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Tags</label>
+                                <input type="text" class="form-control"name="productTags" data-role="tagsinput">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputFile">Status</label>

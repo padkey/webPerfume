@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Wards extends Model
+class Ward extends Model
 {
     public $timestamps = false;
-    protected $fillable = ['name_xaphuong','type','maqh'];
-    protected $primaryKey ='xaid';
-    protected $table = 'tbl_xaphuongthitran';
+    protected $fillable = ['ward_name','type','district_id'];
+    protected $primaryKey ='ward_id';
+    protected $table = 'tbl_ward';
 }

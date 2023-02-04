@@ -20,19 +20,27 @@
                            @csrf
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Product name</label>
-                                <input type="text" class="form-control"name="productName" id="exampleInputEmail1" value="{{$product->product_name}}">
+                                <input type="text" class="form-control"name="productName" id="slug" onkeyup="ChangeToSlug()" value="{{$product->product_name}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Slug</label>
+                                <input type="text" class="form-control"name="productSlug" id="convert_slug" value="{{$product->product_slug}}">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Quantity</label>
-                                <input type="text" class="form-control"name="productQty" id="exampleInputEmail1" value="{{$product->product_quantity}}">
+                                <input type="text" class="form-control"name="productQty" value="{{$product->product_quantity}}">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Product price</label>
-                                <input type="text" class="form-control"name="productPrice" id="exampleInputEmail1" value="{{$product->product_price}}">
+                                <label for="exampleInputEmail1">Cost price</label>
+                                <input type="text" class="form-control money"name="productCost" value="{{$product->product_cost}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Sale price</label>
+                                <input type="text" class="form-control money"name="productPrice" value="{{$product->product_price}}">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Product image</label>
-                                <input type="file" class="form-control"name="productImage" id="exampleInputEmail1">
+                                <input type="file" class="form-control"name="productImage">
                                 <img src="{{URL::to('public/uploads/products/'.$product->product_image)}}" width="100px">
                             </div>
                             <div class="form-group">
@@ -43,7 +51,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Description product</label>
-                                <textarea style="resize:none;" rows="5" type="text" class="form-control" id="ckeditor4" name="productDes" >{{$product->product_des}}
+                                <textarea style="resize:none;" rows="5" type="text" class="form-control" name="productDes" >{{$product->product_des}}
                                 </textarea>
                             </div>
                             <div class="form-group">
@@ -69,6 +77,10 @@
                                         @endif
                                     @endforeach
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Tags</label>
+                                <input type="text" data-role="tagsinput" name="productTags" value="{{$product->product_tags}}">
                             </div>
 
 

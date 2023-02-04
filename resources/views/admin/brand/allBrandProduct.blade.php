@@ -3,7 +3,7 @@
     <div class="table-agile-info">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Show All Brand product
+                Show All Brand
             </div>
             <div class="row w3-res-tb">
                 <div class="col-sm-5 m-b-xs">
@@ -27,14 +27,14 @@
                 </div>
             </div>
             <div class="table-responsive">
-                <?php
-                $message = Session::get('message');
-                if($message){
-                    echo '<span class="text-alert">',$message,'</span>';
-                    //cho nó thành nul để reload lại trang k thấy nó nữa
-                    Session::put('message',null);
-                }
-                ?>
+
+                @php
+                    $message = Session::get('message');
+                    if($message){
+                        echo '<span class="text-alert">',$message,'</span>';
+                        Session::put('message',null);
+                    }
+                @endphp
                 <table class="table table-striped b-t b-light">
                     <thead>
                     <tr>
@@ -50,6 +50,7 @@
                     </tr>
                     </thead>
                     <tbody>
+                  
                     @foreach($allBrandProduct as $key => $brand)
                         <tr>
                             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>

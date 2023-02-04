@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Slider;
 use Session;
+use Auth;
 
 session_start();
 class SliderController extends Controller
 {
     //kiểm tra login
     public function authLogin(){
-        $adminId = Session::get('adminId');
+        $adminId = Auth::id();
         if($adminId){
             return Redirect::to('dashboard');
         }else{

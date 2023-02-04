@@ -9,14 +9,10 @@
                 </ol>
             </div>
             <div class="table-responsive cart_info">
-
+      {{--  hiển thị kiểu html ta dùng  (!! content !!)  --}}
                @if(session()->has('message'))
-                   <div class="alert alert-success">
-                       {{session()->get('message')}}
-                   </div>
-               @elseif(session()->has('error'))
-                   <div class="alert alert-danger">
-                       {{session()->get('error')}}
+                   <div class="alert alert-success text-center">
+                         {!! session()->get('message') !!}
                    </div>
                 @endif
                 <table class="table table-condensed">
@@ -27,6 +23,7 @@
                     <tr class="cart_menu">
                         <td class="image">Item</td>
                         <td class="description"></td>
+                        <td class="description">Quantity in stock</td>
                         <td class="price">Price</td>
                         <td class="quantity">Quantity</td>
                         <td class="total">Total</td>
@@ -56,6 +53,9 @@
                                 <h4><a href=""></a> {{ $cart['product_name'] }}</h4>
                                 <p>Web ID: 1089772</p>
                             </td>
+                            <td class="cart_quantity_stock">
+                                <p>{{$cart['qty_product_in_stock']}}</p>
+                            </td>
                             <td class="cart_price">
                                 <p>{{number_format($cart['product_price'],0,',','.')}} đ</p>
                             </td>
@@ -63,7 +63,7 @@
                                 <div class="cart_quantity_button">
 
                                         <input class="cart_quantity_input" type="number" name="quantityCart[{{$cart['session_id']}}]" value="{{$cart['product_qty']}}" autocomplete="off" size="2" min="1">
-                                        <input type="hidden" value="" name="rowIdCart" class="form-control">
+
                                 </div>
                             </td>
                             <td class="cart_total">

@@ -15,11 +15,11 @@ return [
 
     'default' => env('MAIL_MAILER', 'smtp'),
 'stream' =>[
-  'ssl'=>[
+  /*'ssl'=>[  // thêm cái này cho đỡ lỗi
       'allow_self_signed'=>true,
       'verify_peer' =>false,
       'verify_peer_name'=>false,
-  ]
+  ]*/
 ],
     /*
     |--------------------------------------------------------------------------
@@ -43,8 +43,8 @@ return [
         'smtp' => [
             'transport' => 'smtp',
             'host' => env('MAIL_HOST', 'smtp.googlemail.com'),
-            'port' => env('MAIL_PORT', 465),
-            'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
+            'port' => env('MAIL_PORT', 587),
+            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,

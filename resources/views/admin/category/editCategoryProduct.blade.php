@@ -17,25 +17,32 @@
                     @foreach($editCategoryProduct as $key => $category)
                     <div class="position-center">
                         <form role="form" method="POST" action="{{URL::to('/updateCategoryProduct/'.$category->category_id)}}">
-                            {{ csrf_field() }}
+                            @csrf
                             <div class="form-group">
-
                                 <label for="exampleInputEmail1">Category name</label>
-                                <input type="text" class="form-control"name="categoryName" id="exampleInputEmail1" value="{{$category->category_name}}">
+                                <input type="text" class="form-control"name="categoryName" id="slug" onkeyup="ChangeToSlug()" value="{{$category->category_name}}">
                             </div>
                             <div class="form-group">
-
+                                <label for="exampleInputFile">Belong To The Category</label>
+                                <select name="categoryParent" class="form-control input-sm m-bot15">
+                                    <option value="0">Parent</option>
+                                    @foreach($allCategoryParent as $key => $categoryParent)
+                                        <option value="{{$categoryParent->category_id}}" {{$category->category_parent == $categoryParent->category_id ? 'selected' : ''}}>{{$categoryParent->category_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="exampleInputEmail1">Slug</label>
-                                <input type="text" class="form-control"name="categorySlug" id="exampleInputEmail1" value="{{$category->category_slug}}">
+                                <input type="text" class="form-control"name="categorySlug" id="convert_slug" value="{{$category->category_slug}}">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Description Category</label>
-                                <textarea style="resize:none;" rows="5" type="text" class="form-control" id="ckeditor8" name="categoryDes">{{$category->category_des}}
+                                <textarea style="resize:none;" rows="3" type="text" class="form-control"  name="categoryDes">{{$category->category_des}}
                                 </textarea>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Keywords</label>
-                                <textarea style="resize:none;" rows="5" type="text" class="form-control"  name="metaKeywords" placeholder="Description product">{{$category->meta_keywords}} </textarea>
+                                <textarea style="resize:none;" rows="3" type="text" class="form-control"  name="metaKeywords">{{$category->meta_keywords}} </textarea>
                             </div>
 
                             <button type="submit" name="updateCategoryProduct" class="btn btn-info">Update category</button>

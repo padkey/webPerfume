@@ -43,19 +43,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <span><input type="checkbox" />Remember Me</span>
             <h6><a href="#">Forgot Password?</a></h6>
             <div class="clearfix"></div>
-            <a href="{{URL::to('/loginFacebook')}}">Login facebook</a>
-            <a href="{{URL::to('/loginGoogle')}}">Login google</a>
-            <input type="submit" value="Sign In" name="login">
-            <div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>
-            <br/>
-            @if($errors->has('g-recaptcha-response'))
-                <span class="invalid-feedback" style="display:block">
-	<strong>{{$errors->first('g-recaptcha-response')}}</strong>
-</span>
-            @endif
-        </form>
-{{--        <p>Don't Have an Account ?<a href="registration.html">Create an account</a></p>--}}
 
+            <input type="submit" value="Sign In" name="login">
+
+            <br/>
+        </form>
+        <div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_KEY')}}"></div> {{--captcha--}}
+        @if($errors->has('g-recaptcha-response'))
+            <span class="invalid-feedback" style="display:block">
+	                    <strong>{{$errors->first('g-recaptcha-response')}}</strong>
+                </span>
+        @endif
+       <p><a href="{{URL::to('/loginFacebook')}}">Login facebook</a>
+           <a href="{{URL::to('/loginGoogle')}}">Login google</a></p>
+
+       <p><a href="{{URL::to('/registerAuth')}}">Register Auth</a>
+        <a href="{{URL::to('/loginAuth')}}">Login Auth</a>
+       </p>
 
     </div>
 </div>

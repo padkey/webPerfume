@@ -19,12 +19,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <link href="{{asset('public/backend/css/font-awesome.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('public/backend/css/morris.css')}}" type="text/css"/>
     <!-- calendar -->
-    <link rel="stylesheet" href="{{asset('public/backend/css/monthly.cs')}}s">
+    <link rel="stylesheet" href="{{asset('public/backend/css/monthly.cs')}}">
+    <link rel="shortcut icon" href="{{url('/public/uploads/contact/'.$contact->info_logo)}}">    <!--logo title-->
+
     <!-- //calendar -->
     <!-- //font-awesome icons -->
     <script src="{{asset('public/backend/js/jquery2.0.3.min.js')}}"></script>
     <script src="{{asset('public/backend/js/raphael-min.js')}}"></script>
     <script src="{{asset('public/backend/js/morris.js')}}"></script>
+
+
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">   {{--chức năng search--}}
+    <link rel="stylesheet" href="{{asset('public/backend/css/bootstrap-tagsinput.css')}}">  {{--  tags--}}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">   {{--  Chart--}}
+
+    <meta name="csrf-token" content="{{csrf_token()}}">  <!--token -->
 </head>
 <body>
 <section id="container">
@@ -32,8 +41,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <header class="header fixed-top clearfix">
         <!--logo start-->
         <div class="brand">
+
             <a href="{{URL::to('/dashboard')}}" class="logo">
-                VISITORS
+                Perfume
             </a>
             <div class="sidebar-toggle-box">
                 <div class="fa fa-bars"></div>
@@ -51,7 +61,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <img alt="" src="{{asset('public/backend/images/admin.jpg')}}">
                         <span class="adminName"><?php
-                                $adminName = Session::get('adminName');
+                                $adminName = Auth::user()->admin_name;
                                 if($adminName){
                                     echo $adminName;
                                 }
@@ -61,7 +71,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <ul class="dropdown-menu extended logout">
                         <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                         <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                        <li><a href="{{URL::to('/logout')}}"><i class="fa fa-key"></i> Log Out</a></li>
+                        <li><a href="{{URL::to('/logoutAuth')}}"><i class="fa fa-key"></i> Log Out</a></li>
                     </ul>
                 </li>
                 <!-- user login dropdown end -->
@@ -86,8 +96,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </li>
                     <li class="sub-menu">
                         <a href="javascript:;">
-                            <i class="fa fa-book"></i>
-                            <span>Banner</span>
+                            <i class="fa fa-info"></i>
+                            <span>Information Website</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="{{URL::to('/infoManagement')}}">Information management</a></li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-sliders"></i>
+                            <span>Slider</span>
                         </a>
                         <ul class="sub">
                             <li><a href="{{URL::to('/allSlider')}}">Show slider</a></li>
@@ -106,7 +125,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                     <li class="sub-menu">
                         <a href="javascript:;">
-                            <i class="fa fa-book"></i>
+                            <i class="fa fa-gift"></i>
                             <span>Coupon</span>
                         </a>
                         <ul class="sub">
@@ -117,7 +136,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </li>
                     <li class="sub-menu">
                         <a href="javascript:;">
-                            <i class="fa fa-book"></i>
+                            <i class="fa fa-truck"></i>
                             <span>Delivery</span>
                         </a>
                         <ul class="sub">
@@ -128,8 +147,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </li>
                     <li class="sub-menu">
                         <a href="javascript:;">
-                            <i class="fa fa-book"></i>
-                            <span>List categpoy</span>
+                            <i class="fa fa-th"></i>
+                            <span>Category Product</span>
                         </a>
                         <ul class="sub">
                             <li><a href="{{URL::to('/allCategoryProduct')}}">Show category product</a></li>
@@ -138,8 +157,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </li>
                     <li class="sub-menu">
                         <a href="javascript:;">
-                            <i class="fa fa-book"></i>
-                            <span>List brand</span>
+                            <i class="fa fa-list-ul"></i>
+                            <span>Category Post</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="{{URL::to('/allCategoryPost')}}">Show category post</a></li>
+                            <li><a href="{{URL::to('/addCategoryPost')}}">Create category post</a></li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-th"></i>
+                            <span>Brand</span>
                         </a>
                         <ul class="sub">
                             <li><a href="{{URL::to('/allBrandProduct')}}">Show brand</a></li>
@@ -148,16 +177,65 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </li>
                     <li class="sub-menu">
                         <a href="javascript:;">
-                            <i class="fa fa-book"></i>
-                            <span>List product</span>
+                            <i class="fa fa-product-hunt"></i>
+                            <span>Product</span>
                         </a>
                         <ul class="sub">
                             <li><a href="{{URL::to('/allProduct')}}">Show product</a></li>
                             <li><a href="{{URL::to('/addProduct')}}">Create product</a></li>
                         </ul>
                     </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-file-text"></i>
+                            <span>Post</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="{{URL::to('/allPost')}}">Show Post</a></li>
+                            <li><a href="{{URL::to('/addPost')}}">Create Post</a></li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-video-camera"></i>
+                            <span>Video</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="{{URL::to('/allVideo')}}">Show Video</a></li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-comments-o"></i>
+                            <span>Comment</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="{{URL::to('/allComment')}}">Show Comment</a></li>
+                        </ul>
+                    </li>
 
                     </li>
+                    @hasRole(['admin','author'])
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-users"></i>
+                            <span>User</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="{{URL::to('/users')}}">User management</a></li>
+                            <li><a href="{{URL::to('/addUser')}}">Create user</a></li>
+                        </ul>
+                    </li>
+                    @endhasRole
+
+                    @hasImpersonate
+                    <li>
+                        <a class="active" href="{{URL::to('/destroyImpersonate')}}">
+                            <span>Stop Impersonation</span>
+                        </a>
+                    </li>
+                    @endhasImpersonate
+
 
                 </ul>            </div>
             <!-- sidebar menu end-->
@@ -182,7 +260,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </section>
 <script src="{{asset('public/backend/js/bootstrap.js')}}"></script>
 <script src="{{asset('public/backend/js/jquery.dcjqaccordion.2.7.js')}}"></script>
-<script src="{{asset('public/backend/js/scripts.j')}}s"></script>
+<script src="{{asset('public/backend/js/scripts.js')}}"></script>
+
 <script src="{{asset('public/backend/js/jquery.slimscroll.js')}}"></script>
 <script src="{{asset('public/backend/js/jquery.nicescroll.js')}}"></script>
 <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="{{asset('public/backend/js/flot-chart/excanvas.min.js')}}"></script><![endif]-->
@@ -190,23 +269,501 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('public/backend/ckeditor/ckeditor.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.79/jquery.form-validator.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{{--tags--}}
+<script src="{{asset('public/backend/js/bootstrap-tagsinput.min.js')}}"></script>
+
+<script src="{{asset('resources/js/admin/comment/approval.js')}}"></script>
+<script src="{{asset('resources/js/admin/comment/replyComment.js')}}"></script>
+
+<script src="{{asset('public/backend/js/simple.money.format.js')}}"></script>
+<script>
+    $('.money').simpleMoneyFormat();
+
+</script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>{{--chart--}}
+<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>{{--chart--}}
+
 
 <script type="text/javascript">
     $.validate({
 
     });
 </script>
+ {{--chức năng sắp xếp category_order--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"></script> {{--jqurey--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript"></script>{{--jqurey có chức hàm sortable() để sắp xếp--}}
+{{--sắp xếp category --}}
+<script src="{{asset('resources/js/admin/category/categoryOrder.js')}}"></script>
+{{--Statistical--}}
+<script src="{{asset('resources/js/admin/statistical/statistical.js')}}"></script>
+
+{{--chức năng search từ khóa--}}
+<script src="//cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script>
-        CKEDITOR.replace('ckeditor1');
+    $(document).ready( function () {
+        $('#myTable').DataTable();
+    } );
+</script>
+{{--END Search từ khóa--}}
+
+
+
+<script type="text/javascript">
+
+    function ChangeToSlug()
+    {
+        var slug;
+
+        //Lấy text từ thẻ input title
+        slug = document.getElementById("slug").value;
+        slug = slug.toLowerCase();
+        //Đổi ký tự có dấu thành không dấu
+        slug = slug.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, 'a');
+        slug = slug.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, 'e');
+        slug = slug.replace(/i|í|ì|ỉ|ĩ|ị/gi, 'i');
+        slug = slug.replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, 'o');
+        slug = slug.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, 'u');
+        slug = slug.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, 'y');
+        slug = slug.replace(/đ/gi, 'd');
+        //Xóa các ký tự đặt biệt
+        slug = slug.replace(/\`|\~|\!|\@|\#|\||\$|\%|\^|\&|\*|\(|\)|\+|\=|\,|\.|\/|\?|\>|\<|\'|\"|\:|\;|_/gi, '');
+        //Đổi khoảng trắng thành ký tự gạch ngang
+        slug = slug.replace(/ /gi, "-");
+        //Đổi nhiều ký tự gạch ngang liên tiếp thành 1 ký tự gạch ngang
+        //Phòng trường hợp người nhập vào quá nhiều ký tự trắng
+        slug = slug.replace(/\-\-\-\-\-/gi, '-');
+        slug = slug.replace(/\-\-\-\-/gi, '-');
+        slug = slug.replace(/\-\-\-/gi, '-');
+        slug = slug.replace(/\-\-/gi, '-');
+        //Xóa các ký tự gạch ngang ở đầu và cuối
+        slug = '@' + slug + '@';
+        slug = slug.replace(/\@\-|\-\@|\@/gi, '');
+        //In slug ra textbox có id “slug”
+        document.getElementById('convert_slug').value = slug;
+    }
+
+</script>
+
+<script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+<script>
+    var options = {
+        filebrowserImageBrowseUrl: 'laravel-filemanager?type=Images',
+        filebrowserImageUploadUrl: 'laravel-filemanager/upload?type=Images&_token=',
+        filebrowserBrowseUrl: 'laravel-filemanager?type=Files',
+        filebrowserUploadUrl: 'laravel-filemanager/upload?type=Files&_token='
+    };
+</script>
+<script>
+    CKEDITOR.replace('myEditor', options);
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="/vendor/unisharp/laravel-ckeditor/adapters/jquery.js"></script>
+<script>
+    $('textarea.myEditor').ckeditor(options);
+</script>
+
+
+
+<script>
+    $(document).ready(function (){
+
+        loadIcon();
+        function loadIcon(){
+            $.ajax({
+               url:'{{url('/loadIcon')}}',
+               method:'POST',
+               headers:{
+                   'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+               },
+                success:function (data){
+                   $('#loadIcon').html(data);
+                }
+            });
+        }
+
+        $(document).on('click','.addIcon',(function (){
+
+            var iconName = $('#iconName').val();
+            var iconLink = $('#iconLink').val();
+           var formData = new FormData();
+        formData.append('iconName',iconName);
+        formData.append('iconLink',iconLink);
+        formData.append('iconImage',document.getElementById('iconImage').files[0]);
+            $.ajax({
+           url:'{{url('/saveIcon')}}',
+           method:'POST',
+           headers:{
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+           },
+            data:formData,
+            contentType:false,
+            cache:false,
+            processData:false,
+            success:function (data){
+               swal('Good Job!','Inserted icon successfully!','success');
+               loadIcon();
+                 $('#iconName').val('');
+                $('#iconLink').val('');
+                $('#iconImage').val('');
+            }
+
+        });
+        }));
+
+
+
+        $(document).on('click','.deleleIcon',(function (){
+            var iconId = $(this).data('id');
+            $.ajax({
+                url:'{{url('/deleteIcon')}}',
+                method:'POST',
+                headers:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data:{iconId},
+                success:function (data){
+                    swal('Good Job!','Deleted icon successfully!','success');
+                    loadIcon();
+                }
+
+            });
+        }));
+
+    })
+</script>
+
+<script>
+    $(document).ready(function (){
+        loadVideo();
+        function loadVideo(){
+            $.ajax({
+                url:'{{URL::to('/selectVideo')}}',
+                method:'POST',
+                headers:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success:function(data){
+                    $('#loadVideo').html(data);
+
+                }
+            });
+        }
+
+        //add video
+
+        $(document).on('click','.addVideo',function (){
+          var videoTitle = $('.videoTitle').val();
+            var videoSlug = $('.videoSlug').val();
+            var videoLink = $('.videoLink').val();
+            var videoDes = $('.videoDes').val();
+            formData = new FormData();
+            formData.append("fileVideoImage",document.getElementById("fileVideoImage").files[0]);
+
+            formData.append("videoTitle",videoTitle);
+            formData.append("videoSlug",videoSlug);
+            formData.append("videoLink",videoLink);
+            formData.append("videoDes",videoDes);
+           $.ajax({
+               url:'{{URL::to('/saveVideo')}}',
+               method:'POST',
+               headers:{
+                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               },
+               data:formData,
+               contentType:false,// phải thêm 3 dòng này không là lỗi
+               cache:false,
+               processData:false,
+
+               success:function(data){
+                 loadVideo();
+                   swal({
+                       title:'Good job!',
+                       text:'Added video successfully.',
+                       icon:'success'
+                   });
+               }
+           });
+        });
+
+        //delete video
+        $(document).on('click','.deleteVideo',function (){
+            var videoId = $(this).data('id');
+            swal({
+                title:'Are you sure!',
+                text:'You will not be able to recover this video!',
+                icon:'info',
+                buttons:true
+            }).then((confirm)=>{
+                if(confirm){
+                    $.ajax({
+                        url:'{{URL::to('/deleteVideo')}}',
+                        method:'POST',
+                        headers:{
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data:{videoId:videoId},
+                        success:function(data){
+                            loadVideo();
+                            swal({
+                                title:'Good job!',
+                                text:'Deleted video successfully.',
+                                icon:'success'
+                            });
+                        }
+                    });
+                }
+            });
+
+        });
+
+
+        //edit video
+        $(document).on('blur','.editVideo',function(){
+               //videoId là video mình cần sửa
+                 var videoId = $(this).data('id');
+                //action chứa cột mình cần sửa
+                var action = $(this).data('action');
+                //giá trị mình mới nhập là giá trị mới cho cột trên
+                 var value = $(this).text();
+            swal({
+                title:'Are you sure?',
+                text:'Are you sure to change the '+ action +'?',
+                icon:'info',
+                buttons:true
+            }).then((confirm)=>{
+                if(confirm){
+                    $.ajax({
+                        url:'{{URL::to('/updateVideo')}}',
+                        method:'POST',
+                        headers:{'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')},
+                        data:{videoId:videoId,action:action,value:value} ,
+                        success:function (data){
+                            loadVideo();
+                            swal({
+                                title:'Good job!',
+                                text:'Updated '+ action +' successfully.',
+                                icon:'success'
+                            })
+                        }
+                    });
+                }
+            })
+
+
+        });
+
+        //edit image video
+        //ban đầu bắt sự kiện change của class chứa file image
+        $(document).on('change','.editVideoImage',function (){
+            var videoId = $(this).data('id');
+            var formData = new FormData();
+            //nhớ .files[0] không có cái này k lấy được hình
+            //trong input trong thêm 1 cái id fileIamge-(videoId) để lấy được file image riêng biệt của mỗi video
+            formData.append('fileVideoImage',document.getElementById("fileImage-"+videoId).files[0]);
+            formData.append('videoId',videoId);
+
+            $.ajax({
+                url:'{{URL::to('/updateVideoImage')}}',
+                method:"POST",
+                headers:{'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')},
+                data:formData,
+                contentType:false,
+                cache:false,
+                processData:false,
+                success:function(data){
+                    loadVideo();
+                    swal({
+                        title:'Good job!',
+                        text:'Updated image successfully.',
+                        icon:'success'
+                    })
+                }
+            });
+        });
+
+
+    });
+
+
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function (){
+        loadGallery();
+        function loadGallery(){
+          var  productId = $('.productId').val();
+           var _token = $('input[name="_token"]').val();
+           $.ajax({
+              url:'{{URL::to('/selectGallery')}}',
+              method:"post",
+              data:{productId:productId,_token:_token},
+               success:function(data){
+                        $('#galleryLoad').html(data);
+               }
+           });
+        }
+
+        //kiểm tra xem file ảnh có lỗi theo yêu cầu của mình không
+        $('#file').change(function (){
+            var files = $(this)[0].files;
+            var error = 0 ;
+            //nếu files nhiều hơn 5 hình
+            if(files.length > 5){
+                error++;
+                swal({
+                    title:'Error!',
+                    text:'Can only upload up to five image!.',
+                    icon:'error'
+                })
+
+            }else if(files.length == ''){
+                error++;
+                swal({
+                    title:'Error!',
+                    text:'You must add image!',
+                    icon:'error'
+                })
+            }else if(files.size > 2000000){
+                error++;
+                swal({
+                    title:'Error!',
+                    text:'Image file must not be larger than 2MB!',
+                    icon:'error'
+                })
+            }
+            //nếu file không có 3 lỗi trên thì không làm j hết, nếu có lỗi thì thông báo raqua cái id
+            if(error == 0){
+
+            }else{
+                //cho cái điền hình trở về rỗng
+                $('#file').val('');
+
+            }
+        });
+
+
+        //edit Name Gallery
+        $(document).on('blur','.editNameGallery',function(){
+            var galleryId = $(this).data('id');
+            var _token = $('input[name="_token"]').val();
+            var galleryName = $(this).text();
+            $.ajax({
+               url:'{{URL::to('/editNameGallery')}}',
+               method:'POST',
+               data:{galleryId:galleryId,galleryName:galleryName,_token:_token},
+                success:function(data){
+                   loadGallery();
+                   swal({
+                       title:'Good job!',
+                       text:'Updated name gallery successfully.',
+                       icon:'success'
+                   })
+
+                }
+            });
+
+        });
+        //deleteGallery
+        $(document).on('click','.deleteGallery',function(){
+                var galleryId = $(this).data('id');
+            var _token = $('input[name="_token"]').val();
+            swal({
+                title:'Are you sure?',
+                text:'You will not be able to recover this gallery!.',
+                icon:'info',
+                buttons:true,
+            }).then((confirm)=>{
+                if(confirm){
+                    $.ajax({
+                        url:'{{URL::to('/deleteGallery')}}',
+                        method:'post',
+                        data:{galleryId:galleryId,_token:_token},
+                        success:function (data){
+                            loadGallery();
+                            swal({
+                                title:'Good job!',
+                                text:'Deleted gallery successfully.',
+                                icon:'success'
+                            })
+                        }
+                    })
+                }
+            })
+
+        });
+
+
+        //update Gallary
+        $(document).on('change','.fileImage',function(){
+            var galleryId = $(this).data('id');
+            var form_Data = new FormData();
+            form_Data.append('file',document.getElementById('file-'+ galleryId).files[0]);
+            form_Data.append('galleryId',galleryId);
+            var _token = $('input[name="_token"]').val();
+
+                    $.ajax({
+                        url:'{{URL::to('/updateGallery')}}',
+                        method:'POST',
+                        headers:{
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data:form_Data,
+                        contentType:false,
+                        cache:false,
+                        processData:false,
+                        success:function (data){
+                            loadGallery();
+                            swal({
+                                title:'Good job!',
+                                text:'Updated gallery successfully.',
+                                icon:'success'
+                            })
+
+                        }
+                    })
+
+
+        });
+
+    });
+</script>
+<script type="text/javascript">
+
+        CKEDITOR.replace('ckeditor1',{
+            // dòng này để upload ảnh từ máy tính
+            filebrowserImageUploadUrl : '{{url("uploadsCkeditor?_token=".csrf_token()) }}',
+            filebrowserBrowseUploadUrl : "{{url('fileBrowser?_token='.csrf_token()) }}",
+            filebrowserUploadMethod:'form'
+
+        });
         CKEDITOR.replace('ckeditor2');
-        CKEDITOR.replace('ckeditor3');
+        CKEDITOR.replace('ckeditor3',{
+
+            filebrowserImageUploadUrl : '{{url("uploadsCkeditor?_token=".csrf_token()) }}',
+            filebrowserBrowseUploadUrl : "{{url('fileBrowser?_token='.csrf_token()) }}",
+            filebrowserUploadMethod:'form'
+        });
         CKEDITOR.replace('ckeditor4');
         CKEDITOR.replace('ckeditor5');
         CKEDITOR.replace('ckeditor6');
         CKEDITOR.replace('ckeditor7');
         CKEDITOR.replace('ckeditor8');
         CKEDITOR.replace('ckeditor9');
-        CKEDITOR.replace('ckeditor10');
+        CKEDITOR.replace('ckeditor10',{
+            // dòng này để upload ảnh từ máy tính
+            filebrowserImageUploadUrl : "{{ url('uploads-ckeditor?_token='.csrf_token()) }}",
+            filebrowserBrowseUrl : "{{ url('file-browser?_token='.csrf_token()) }}",
+            filebrowserUploadMethod: 'form'
+
+        });
+        CKEDITOR.replace('ckeditor11',{
+            filebrowserImageUploadUrl : "{{ url('uploads-ckeditor?_token='.csrf_token()) }}",
+            filebrowserBrowseUrl : "{{ url('file-browser?_token='.csrf_token()) }}",
+            filebrowserUploadMethod: 'form'
+        });
 
 </script>
 <script type="text/javascript">
@@ -239,6 +796,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="text/javascript">
     //cập nhật trạng thái đơn hàng và số lượng tồn kho
     $('.orderDetails').change(function (){
+        //lấy tiền giảm giá để gửi mail
+        var totalDiscount = $('.totalDiscount').val();
             //lấy val
         var orderStatus =$(this).val();
         //lấy idorder ở mấy dòng select , children là mấy option ở trong select , :selected là lấy cái dòng nào được chọn
@@ -269,7 +828,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             var qtyProductOrder = $('.qty_product_order_'+ productId[i]).val();
             if(parseInt(qtyProductInventory) < parseInt(qtyProductOrder)){
                 j++
-               // alert('The number of product in the order must be less than the number of products in stock !');
                 $('.warning-qty-product-'+ productId[i]).css('background','firebrick');
             }
         }
@@ -278,11 +836,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                    $.ajax({
                        url:'{{URL::to('/updateInventory')}}',
                        method:"POST",
-                       data:{orderStatus:orderStatus,orderId:orderId,productQty:productQty,productId:productId,_token:_token},
+                       data:{totalDiscount:totalDiscount,orderStatus:orderStatus,orderId:orderId,productQty:productQty,productId:productId,_token:_token},
                        success:function(data){
 
                            swal({
-                               title:'Goob Job ',
+                               title:'Good Job ',
                                text:'Update order status successfully.',
                                icon:'success',
                            });
@@ -336,9 +894,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         });
 
 
-  //      $('.fee_feeship_edit').on('blur',function(){
-
-      //  });
 
 
         $('.addDelivery').click(function(){

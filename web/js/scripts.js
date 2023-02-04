@@ -196,7 +196,8 @@
         /*==Sidebar Toggle==*/
 
         $(".leftside-navigation .sub-menu > a").click(function () {
-            var o = ($(this).offset());
+            var o = ($(
+            ).offset());
             var diff = 80 - o.top;
             if (diff > 0)
                 $(".leftside-navigation").scrollTo("-=" + Math.abs(diff), 500);

@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'users',
+        'passwords' => 'customusers',
     ],
 
     /*
@@ -34,11 +34,11 @@ return [
     | Supported: "session", "token"
     |
     */
-
+ //  guards này là thằng lưu seesion cho Auth
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'customusers',
         ],
 
         'api' => [
@@ -64,17 +64,17 @@ return [
     | Supported: "database", "eloquent"
     |
     */
-
+// providers vó nhiện vụ truy vấn lấy csdl ra để so sánh với thằng models user , mà mình xài models Admin nên phải cấu hình phía dưới
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+         'customusers' => [ // custom users là tên thui, để nhấp vào mấy cái cột bên trên tương ứng khi xài models admin
+            'driver' => 'eloquent',  // eloquent là database
+             'model' => App\Models\Admin::class,
+         ],
     ],
 
     /*
@@ -98,6 +98,12 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
+        ],
+        'customusers'=>[
+            'provider'=>'customusers',
+            'table'=>'password_resets',
+            'expire'=>15, // thời hạn password rết lại là 15p, cái phiên đăng nhập là 15p
+            'throttle' => 15,
         ],
     ],
 

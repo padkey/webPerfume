@@ -20,11 +20,11 @@
                                 {{ csrf_field() }}
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Brand name</label>
-                                    <input type="text" class="form-control"name="brandName" id="exampleInputEmail1" value="{{$editBrandProduct->brand_name}}">
+                                    <input type="text" class="form-control"name="brandName" id="slug" onkeyup="ChangeToSlug()" value="{{$editBrandProduct->brand_name}}">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Slug</label>
-                                    <input type="text" class="form-control"name="brandSlug" id="exampleInputEmail1" value="{{$editBrandProduct->brand_slug}}">
+                                    <input type="text" class="form-control"name="brandSlug" id="convert_slug" value="{{$editBrandProduct->brand_slug}}">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Keywords</label>

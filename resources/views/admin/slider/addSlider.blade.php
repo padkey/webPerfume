@@ -23,7 +23,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Image</label>
-                                <input type="file" class="form-control"name="sliderImage" id="exampleInputEmail1" >
+                                <input type="file" class="form-control"name="sliderImage" id="exampleInputEmail1" accept="video/mp4,video/x-m4v,video/*">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Description</label>

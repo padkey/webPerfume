@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 // sử dụng database
-
+use App\Models\CatePost;
+use Auth;
 use App\Models\Brand; // sử dụng model
 //sử dung session
 use DB;
@@ -15,7 +16,7 @@ class BrandProduct extends Controller
 {
         //kiểm tra login
     public function authLogin(){
-        $adminId = Session::get('adminId');
+        $adminId = Auth::id();
         if($adminId){
             return Redirect::to('dashboard');
         }else{
@@ -103,14 +104,15 @@ class BrandProduct extends Controller
     //end ADMIN pages
 
 
-    public function showBrandHome($brandId,Request $req){
+    public function productsByBrand($brandSlug,Request $req){
         $categoryProduct = DB::table('tbl_category_product')->where('category_status',1)->orderby('category_id','desc')->get();
+        $allCategoryPost = CatePost::where('category_post_status',1)->orderby('category_post_id','DESC')->get();
 
         $brandProduct = DB::table('tbl_brand')->where('brand_status',1)->orderby('brand_id','desc')->get();
-        $brandName = DB::table('tbl_brand')->where('brand_id',$brandId)->get();
+        $brandName = DB::table('tbl_brand')->where('brand_slug',$brandSlug)->get();
         $getProductsByBrandId = DB::table('tbl_product')
             ->join('tbl_brand','tbl_brand.brand_id','=','tbl_product.brand_id')
-            ->where('tbl_product.brand_id',$brandId)
+            ->where('tbl_brand.brand_slug',$brandSlug)
             ->get();
         foreach ($brandProduct as $key => $value){
             //----seo để cho google biết là google biết mình miêu tả trang web như thế này
@@ -125,6 +127,7 @@ class BrandProduct extends Controller
         };
         return view('pages.brand.showBrand')
             ->with('categoryProduct',$categoryProduct)
+            ->with('allCategoryPost',$allCategoryPost)
             ->with('brandProduct',$brandProduct)
             ->with('productsByBrand',$getProductsByBrandId)
             ->with('brandName',$brandName)

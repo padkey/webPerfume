@@ -38,7 +38,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL').'/public/storage', // thêm public vào mới hiển thị hình ảnh khi uploads lên được
             'visibility' => 'public',
         ],
 

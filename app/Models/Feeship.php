@@ -13,14 +13,14 @@ class Feeship extends Model
     protected $table = 'tbl_feeship';
     public function city(){
         // có nghĩa là lấy id của City đem so sánh với fee_matp để lấy ra dữ liêuk
-        return $this->belongsTo('App\Models\City','fee_matp');
+        return $this->belongsTo('App\Models\Province','fee_matp');
     }
     public function province(){
         //lấy id của province đối chiếu với fee_maqh để lấy dữ liệu
-        return $this->belongsTo('App\Models\Province','fee_maqh');
+        return $this->belongsTo('App\Models\District','fee_maqh');
     }
     public function wards(){
         // lấy id của wards để đối chiếu với fee_xaid để lấy dữ liệu
-        return $this->belongsTo('App\Models\Wards','fee_xaid');
+        return $this->belongsTo('App\Models\Ward','fee_xaid');
     }
 }

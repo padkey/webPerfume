@@ -28,8 +28,9 @@ class Kernel extends HttpKernel
      *
      * @var array
      */
+    //đặt vào group để sau này nhóm vào 1 cái đường dẫn luôn , còn đì middleware thì cái đường dẫn riêng lẻ
     protected $middlewareGroups = [
-        'web' => [
+        'web' => [  //khai báo impersonate ở đây thì mỗi route web nó đều chạy impersonate
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
@@ -37,6 +38,9 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\Impersonate::class, //khai báo impersonate ở đây thì mỗi route web nó đều chạy impersonate
+            \App\Http\Middleware\Language::class, // thêm language vào, bất cứ điều j xảy ra đầu chạy vào class này
+
         ],
 
         'api' => [
@@ -62,5 +66,8 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-    ];
+    // thêm kiểm tra quyền ở middleware vào
+        'auth.roles'=> \App\Http\Middleware\AccessPermission::class, // khai báo ở đây thì ra ngoài kia phải sử dụng middleware
+
+        ];
 }

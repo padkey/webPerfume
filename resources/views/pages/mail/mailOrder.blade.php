@@ -95,9 +95,9 @@
                                         <table cellspacing="0" cellpadding="0" border="0" align="right">
                                             <tr>
                                                 <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400;">
-                                                    <p style="font-size: 18px; font-weight: 400; margin: 0; color: #ffffff;"><a href="#" target="_blank" style="color: #ffffff; text-decoration: none;">Shop &nbsp;</a></p>
+                                                    <p style="font-size: 18px; font-weight: 400; margin: 0; color: #ffffff;"><a href="{{url('/home')}}" target="_blank" style="color: #ffffff; text-decoration: none;">Shop &nbsp;</a></p>
                                                 </td>
-                                                <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 24px;"> <a href="#" target="_blank" style="color: #ffffff; text-decoration: none;"><img src="https://img.icons8.com/color/48/000000/small-business.png" width="27" height="23" style="display: block; border: 0px;" /></a> </td>
+                                                <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 24px;"> <a href="{{url('/home')}}" target="_blank" style="color: #ffffff; text-decoration: none;"><img src="https://img.icons8.com/color/48/000000/small-business.png" width="27" height="23" style="display: block; border: 0px;" /></a> </td>
                                             </tr>
                                         </table>
                                     </td>
@@ -116,7 +116,8 @@
                             </tr>
                             <tr>
                                 <td align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 10px;">
-                                    <p style="font-size: 16px; font-weight: 400; line-height: 24px; color: #777777;"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium iste ipsa numquam odio dolores, nam. </p>
+                                    <p style="font-size: 16px; font-weight: 400; line-height: 24px; color: #777777;"> Chào {{$shippingArray['shipping_name']}} , cảm ơn bạn đã tin tưởng và sử dụng dịch vụ của chúng tôi. </p>
+
                                 </td>
                             </tr>
                             <tr>
@@ -126,18 +127,23 @@
                                             <td width="75%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;"> Order Confirmation # </td>
                                             <td width="25%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;"> 2345678 </td>
                                         </tr>
+                                        @php $subTotal =0; @endphp
+                                        @foreach($cartArray as $key => $item)
+                                            @php $subTotal = $subTotal + ($item['product_price']*$item['product_qty']); @endphp
                                         <tr>
-                                            <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;"> Purchased Item (1) </td>
-                                            <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;"> $100.00 </td>
+                                            <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;"> {{$item['product_name']}} ({{$item['product_qty']}}) </td>
+                                            <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;"> {{number_format($item['product_price']*$item['product_qty'],0,',','.')}}đ </td>
+                                        </tr>
+                                        @endforeach
+                                        <tr>
+                                            <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;"> Discount </td>
+                                            <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">-{{number_format($orderArray['totalDiscount'],0,',','.')}}đ </td>
                                         </tr>
                                         <tr>
-                                            <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;"> Shipping + Handling </td>
-                                            <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;"> $10.00 </td>
+                                            <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;"> Feeship </td>
+                                            <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;"> {{number_format($shippingArray['feeship'],0,',','.')}}đ </td>
                                         </tr>
-                                        <tr>
-                                            <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;"> Sales Tax </td>
-                                            <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;"> $5.00 </td>
-                                        </tr>
+
                                     </table>
                                 </td>
                             </tr>
@@ -146,7 +152,8 @@
                                     <table cellspacing="0" cellpadding="0" border="0" width="100%">
                                         <tr>
                                             <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;"> TOTAL </td>
-                                            <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;"> $115.00 </td>
+                                            @php $total = $subTotal - $orderArray['totalDiscount'] + $shippingArray['feeship']; @endphp
+                                            <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;"> {{number_format($total,0,',','.')}}đ </td>
                                         </tr>
                                     </table>
                                 </td>
@@ -164,7 +171,7 @@
                                             <tr>
                                                 <td align="left" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px;">
                                                     <p style="font-weight: 800;">Delivery Address</p>
-                                                    <p>675 Massachusetts Avenue<br>11th Floor<br>Cambridge, MA 02139</p>
+                                                    <p>{{$shippingArray['shipping_address']}}</p>
                                                 </td>
                                             </tr>
                                         </table>
@@ -173,8 +180,8 @@
                                         <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:300px;">
                                             <tr>
                                                 <td align="left" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px;">
-                                                    <p style="font-weight: 800;">Estimated Delivery Date</p>
-                                                    <p>January 1st, 2016</p>
+                                                    <p style="font-weight: 800;text-align:end">Estimated Delivery Date</p>
+                                                    <p style="text-align:end">{{$shippingArray['ngayDuKien']}}</p>
                                                 </td>
                                             </tr>
                                         </table>
@@ -189,14 +196,15 @@
                         <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;">
                             <tr>
                                 <td align="center" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 25px;">
-                                    <h2 style="font-size: 24px; font-weight: 800; line-height: 30px; color: #ffffff; margin: 0;"> Get 30% off your next order. </h2>
+                                    <h2 style="font-size: 24px; font-weight: 800; line-height: 30px; color: #ffffff; margin: 0;"> Tặng bạn mã giảm giá 10% cho đơn hàng tiếp theo. </h2>
+                                    <p>Mã giảm giá : THANKYOU</p>
                                 </td>
                             </tr>
                             <tr>
                                 <td align="center" style="padding: 25px 0 15px 0;">
                                     <table border="0" cellspacing="0" cellpadding="0">
                                         <tr>
-                                            <td align="center" style="border-radius: 5px;" bgcolor="#66b3b7"> <a href="#" target="_blank" style="font-size: 18px; font-family: Open Sans, Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; border-radius: 5px; background-color: #F44336; padding: 15px 30px; border: 1px solid #F44336; display: block;">Shop Again</a> </td>
+                                            <td align="center" style="border-radius: 5px;" bgcolor="#66b3b7"> <a href="{{url('/home')}}" target="_blank" style="font-size: 18px; font-family: Open Sans, Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; border-radius: 5px; background-color: #F44336; padding: 15px 30px; border: 1px solid #F44336; display: block;">Shop Again</a> </td>
                                         </tr>
                                     </table>
                                 </td>
@@ -217,7 +225,7 @@
                             </tr>
                             <tr>
                                 <td align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 24px;">
-                                    <p style="font-size: 14px; font-weight: 400; line-height: 20px; color: #777777;"> If you didn't create an account using this email address, please ignore this email or <a href="#" target="_blank" style="color: #777777;">unsusbscribe</a>. </p>
+                                    <p style="font-size: 14px; font-weight: 400; line-height: 20px; color: #777777;"> Mọi chi tiết xin liên hệ với chúng tôi qua hostline 0968658176 or <a href="#" target="_blank" style="color: #777777;">Facebook</a>. </p>
                                 </td>
                             </tr>
                         </table>

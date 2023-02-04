@@ -16,23 +16,31 @@
             <div class="panel-body">
                 <div class="position-center">
                     <form role="form" method="POST" action="{{URL::to('/saveCategoryProduct')}}">
+                        @csrf
                         <div class="form-group">
-                            {{ csrf_field() }}
                             <label for="exampleInputEmail1">Category name</label>
-                            <input type="text" class="form-control"name="categoryName" id="exampleInputEmail1" >
+                            <input type="text" class="form-control"name="categoryName" id="slug" onkeyup="ChangeToSlug()">
                         </div>
                         <div class="form-group">
-                            {{ csrf_field() }}
                             <label for="exampleInputEmail1">Slug</label>
-                            <input type="text" class="form-control"name="categorySlug" id="exampleInputEmail1">
+                            <input type="text" class="form-control"name="categorySlug" id="convert_slug">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Description Category</label>
-                            <textarea style="resize:none;" rows="5" type="text" class="form-control" id="ckeditor7" name="categoryDes" > </textarea>
+                            <textarea style="resize:none;" rows="3" type="text" class="form-control"  name="categoryDes" > </textarea>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Keywords</label>
-                            <textarea style="resize:none;" rows="5" type="text" class="form-control" id="ckeditor2" name="metaKeywords"> </textarea>
+                            <textarea style="resize:none;" rows="3" type="text" class="form-control" name="metaKeywords"> </textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputFile">Belong To The Category</label>
+                            <select name="categoryParent" class="form-control input-sm m-bot15">
+                                <option value="0">Parent</option>
+                                @foreach($allCategoryParent as $key => $categoryParent)
+                                    <option value="{{$categoryParent->category_id}}">{{$categoryParent->category_name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputFile">Status</label>

@@ -51,7 +51,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </span>
         </form>
         <a href="{{URL::to('/loginAuth')}}">Login Auth</a>
-       
+
 
 
     </div>

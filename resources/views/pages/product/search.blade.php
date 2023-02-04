@@ -1,7 +1,10 @@
-@extends('layout')
+@extends('frontend_layout')
+@section('header')
+    @include('pages.include.headerNormal')
+    @endsection
 @section('content')
 
-    <div class="features_items"><!--features_items-->
+    {{--<div class="features_items"><!--features_items-->
         <h2 class="title text-center">Search results</h2>
         @foreach($searchProduct as $key => $product)
             <div class="col-sm-4">
@@ -10,7 +13,7 @@
                         <div class="single-products">
                             <div class="productinfo text-center">
                                 <img src="{{('public/uploads/products/'.$product->product_image)}}" alt="" />
-                                {{--<img src="{{('public/frontend/images/product1.jpg')}}" alt="" />--}}
+                                --}}{{--<img src="{{('public/frontend/images/product1.jpg')}}" alt="" />--}}{{--
                                 <h2>{{number_format($product->product_price).' VNĐ'}}</h2>
                                 <p>{{$product->product_name}}</p>
                                 <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
@@ -30,6 +33,6 @@
             </div>
         @endforeach
 
-    </div><!--features_items-->
+    </div><!--features_items-->--}}
 
 @endsection

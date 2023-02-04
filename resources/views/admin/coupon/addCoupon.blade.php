@@ -19,18 +19,26 @@
                             @csrf
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Coupon name</label>
-                                <input type="text" class="form-control"name="couponName" id="exampleInputEmail1" >
+                                <input type="text" class="form-control"name="couponName" >
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Date start</label>
+                                <input type="date" class="form-control"name="couponDateStart" >
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Date end</label>
+                                <input type="date" class="form-control"name="couponDateEnd" >
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Coupon code</label>
-                                <input type="text" class="form-control"name="couponCode" id="exampleInputEmail1" >
+                                <input type="text" class="form-control"name="couponCode" >
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Quantity code</label>
-                                <input type="text" class="form-control"name="couponTime" id="exampleInputEmail1">
+                                <input type="text" class="form-control"name="couponQty" >
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputPassword1"> Feature code </label>
+                                <label for="exampleInputPassword1"> Condition code </label>
                                 <select name="couponCondition" class="form-control input-sm m-bot15">
                                     <option value="0" selected>--- Choose ---</option>
                                     <option value="1">Discount By %</option>
@@ -38,7 +46,7 @@
                                 </select>                            </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Enter % or money discount</label>
-                                <input type="text" class="form-control"name="couponNumber" id="exampleInputEmail1" >
+                                <input type="text" class="form-control money"name="couponNumber" id="exampleInputEmail1" >
                             </div>
 
                             <button type="submit" name="addCoupon" class="btn btn-info">Add coupon</button>

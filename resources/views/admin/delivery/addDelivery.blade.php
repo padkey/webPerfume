@@ -42,7 +42,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Transport fee</label>
-                                <input type="text" class="form-control fee-ship"name="feeShip" id="exampleInputEmail1" >
+                                <input type="text" class="form-control fee-ship money"name="feeShip" id="exampleInputEmail1" >
                             </div>
 
                             <button type="button" name="addDelivery" class="btn btn-info addDelivery">Add delivery</button>
